@@ -1,18 +1,14 @@
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-    <asset:stylesheet src="application.css"/>
+    <meta name="layout" content="register"/>
     <title><g:message code='springSecurity.login.title'/></title>
 </head>
 
 <body>
 <div id="login">
-    <div class="inner d-sm-flex justify-content-center">
-        <div class="card card-info col-4" style="padding: 0">
-            <div class="card-header bg-gradient-gray">
+    <div class="inner d-flex justify-content-center">
+        <div class="card card-info col p-0">
+            <div class="card-header bg-gradient-blue">
                 <h3 class="card-title"><g:message code='springSecurity.login.header'/></h3>
             </div>
             <g:if test='${flash.message}'>
@@ -21,47 +17,45 @@
                 </g:if>
             </g:if>
 
-            <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" class="form" autocomplete="off">
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label for="username" class="col-3 col-form-label"><g:message code='springSecurity.login.email.label'/></label>
-                        <div class="col-sm-9" style="padding-left: 0">
-                            <input type="email" class="form-control" id="username" name="${usernameParameter ?: 'username'}" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-
-                        <label for="password" class="col-3 col-form-label"><g:message code='springSecurity.login.password.label'/></label>
-                        <div class="col-sm-9" style="padding-left: 0">
-                            <input type="password" class="form-control" name="${passwordParameter ?: 'password'}" id="password"/>
-                        </div>
-                    </div>
-                    <div class="form-group row" style="margin-bottom: 0">
-                        <div class="offset-sm-3 col-sm-8" style="padding-left: 0">
-                            <div class="form-check" style="padding-left: 0">
-                                <p id="remember_me_holder">
-                                    <input type="checkbox" class="chk" name="${rememberMeParameter ?: 'remember-me'}" id="remember_me" <g:if test='${hasCookie}'>checked="checked"</g:if>/>
-                                    <label for="remember_me" class="form-check-label"><g:message code='springSecurity.login.remember.me.label'/></label>
-                                </p>
+            <div class="card-body">
+                <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" class="form" autocomplete="off" style="margin-bottom: 0">
+                    <p class="text-left" style="margin-bottom: 0"><g:message code='springSecurity.login.email.label'/></p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" id="username" name="${usernameParameter ?: 'username'}" placeholder="Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer" style="padding-top: 0">
-                    <button type="submit" class="btn btn-info bg-gradient-gray btn-outline-info" id="submit">${message(code: 'springSecurity.login.button')}</button>
-                </div>
+                    <p class="text-left" style="margin-bottom: 0"><g:message code='springSecurity.login.password.label'/></p>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" name="${passwordParameter ?: 'password'}" id="password"/>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" class="chk" name="${rememberMeParameter ?: 'remember-me'}" id="remember_me" <g:if test='${hasCookie}'>checked="checked"</g:if>/>
+                                <label for="remember_me" class="form-check-label"><g:message code='springSecurity.login.remember.me.label'/></label>
 
-            </form>
+                            </div>
+                        </div>
 
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block" id="submit">${message(code: 'springSecurity.login.button')}</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-footer text-center pt-0">
+            <g:link controller="registration" action="index" class="text-center mb-10">I don't have a membership</g:link>
         </div>
     </div>
 </div>
-
-<asset:javascript src="application.js"/>
-<script>
-    (function() {
-        document.forms['loginForm'].elements['${usernameParameter ?: 'username'}'].focus();
-    })();
-</script>
 </body>
 </html>

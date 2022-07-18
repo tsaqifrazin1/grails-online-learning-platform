@@ -1,6 +1,10 @@
 %{--Include Main Layout--}%
-<meta name="layout" content="main"/>
-
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="layout" content="main"/>
+</head>
+<body>
 <div class="card">
     <div class="card-header">
         <g:message code="review" args="['Create']"/>
@@ -18,3 +22,5 @@
         </g:form>
     </div>
 </div>
+</body>
+</html>

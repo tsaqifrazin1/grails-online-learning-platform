@@ -1,5 +1,6 @@
 package com.intern.olp
 
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 
 
@@ -7,10 +8,16 @@ import grails.plugin.springsecurity.annotation.Secured
 class ReviewController {
 
     ReviewService reviewService
+    SpringSecurityService springSecurityService
 
     def index() {
         def response = reviewService.list(params)
-        [reviewList: response.list, total: response.count]
+        def user = springSecurityService.getCurrentUser()
+        if(user){
+            [reviewList: response.list, total: response.count, me:user]
+        } else {
+            [reviewList: response.list, total: response.count]
+        }
     }
 
     def details(Integer id){

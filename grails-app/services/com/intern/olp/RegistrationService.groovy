@@ -6,6 +6,13 @@ import grails.web.servlet.mvc.GrailsParameterMap
 @Transactional
 class RegistrationService {
 
+    private static final String AUTHORIZED = "AUTHORIZED"
+
+    def setMemberAuthorization(User user) {
+        def authorization = [isLoggedIn: true, user: user]
+        AppUtil.getAppSession()[AUTHORIZED] = authorization
+    }
+
     def save(GrailsParameterMap params) {
         User user = new User(params)
         def response = AppUtil.saveResponse(false, user)

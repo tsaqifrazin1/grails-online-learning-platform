@@ -18,7 +18,6 @@ class RegistrationController {
             flash.message = AppUtil.infoMessage(g.message(code: "unable.to.save", args: ['User']), false)
             redirect(action: "index")
         } else {
-            println(params)
             flash.message = AppUtil.infoMessage(g.message(code: "saved", args: ['User']))
             redirect(controller: "login", action: "auth")
         }

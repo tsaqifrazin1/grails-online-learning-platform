@@ -65,6 +65,23 @@ class OlpTagLib {
         }
     }
 
+    def all = { attrs ->
+        if (!attrs.bean) throwTagError("Tag [all] is missing required attribute [bean]")
+        def bean = resolveBean(attrs.bean)
+        println(attrs.prefix)
+        if (attrs.prefix != null) {
+            def prefix = resolvePrefix(attrs.prefix)
+        }
+        def domainClass = resolveDomainClass(bean)
+        if (domainClass) {
+            for (property in resolvePersistentProperties(domainClass, attrs)) {
+                out << field(bean: bean, property: property.name, prefix: prefix)
+            }
+        } else {
+            throwTagError('Tag [all] currently only supports domain types')
+        }
+    }
+
     private Object resolveBean(beanAttribute) {
         resolvePageScopeVariable(beanAttribute) ?: beanAttribute ?: beanStack.bean
     }
@@ -74,6 +91,13 @@ class OlpTagLib {
         attributeName?.toString() ? pageScope.variables[attributeName] : null
     }
 
+    private String resolvePrefix(prefixAttribute) {
+        def prefix = resolvePageScopeVariable(prefixAttribute) ?: prefixAttribute ?: beanStack.prefix
+        if (prefix && !prefix.endsWith('.'))
+            prefix = prefix + '.'
+        prefix ?: ''
+    }
+
     private GrailsDomainClass resolveDomainClass(bean) {
         resolveDomainClass(bean.getClass())
     }
@@ -81,6 +105,7 @@ class OlpTagLib {
     private GrailsDomainClass resolveDomainClass(Class beanClass) {
         grailsApplication.getDomainClass(beanClass.name)
     }
+
     private List<GrailsDomainClassProperty> resolvePersistentProperties(GrailsDomainClass domainClass, attrs) {
         def properties
 
