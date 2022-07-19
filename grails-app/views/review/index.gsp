@@ -19,9 +19,9 @@
                             %{--<option value="user">User Email</option>--}%
                         %{--</select>--}%
                         <g:if test="${reviewList[0] != null}">
-                            <olp:dropDownColName collection="${reviewList}"/>
+                            <olp:dropDownColName collection="${reviewList}" withId="['id']"/>
                         </g:if>
-                        %{--<g:select name="colName" class="form-control" from="[body: 'Body', user: 'User Email']" value="${params?.colName}" optionKey="key" optionValue="value" onselect="saveValue(this)"/>--}%
+                        %{--<g:select name="colName" class="form-control" from="[body: 'Body',Body user: 'User Email']" value="${params?.colName}" optionKey="key" optionValue="value" onselect="saveValue(this)"/>--}%
                         <input type="text" name="colValue" class="form-control" onkeyup="saveValue(this)" id="colValue">
                         <span class="input-group-btn">
                             <button class="btn btn-default" id="search-button" type="submit">Search</button>
