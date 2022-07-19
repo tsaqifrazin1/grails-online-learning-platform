@@ -38,8 +38,12 @@ class OlpTagLib {
                 properties = attrs.remove('properties').collect { domainClass.getPropertyByName(it) }
             } else {
                 properties = resolvePersistentProperties(domainClass, attrs)
-                if (properties.size() > 6) {
-                    properties = properties[0..6]
+                if(attrs.containsKey('withId')) {
+                    def withId = attrs.remove('withId').collect { domainClass.getPropertyByName(it) }
+                    properties.add(0, withId[0])
+                }
+                if (properties.size() > 10) {
+                    properties = properties[0..10]
                 }
             }
             def displayStyle = attrs.remove('displayStyle')
