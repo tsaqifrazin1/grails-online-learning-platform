@@ -47,7 +47,6 @@ class UserService {
                 order("id", "desc")
             }
         }
-
         return [list: userList, count: User.count()]
     }
 

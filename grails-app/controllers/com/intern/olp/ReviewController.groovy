@@ -12,12 +12,7 @@ class ReviewController {
 
     def index() {
         def response = reviewService.list(params)
-        def user = springSecurityService.getCurrentUser()
-        if(user){
-            [reviewList: response.list, total: response.count, me:user]
-        } else {
             [reviewList: response.list, total: response.count]
-        }
     }
 
     def details(Integer id){

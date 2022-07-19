@@ -1,10 +1,12 @@
 OLP = {};
 
-document.getElementById("colValue").value = getSavedValue("colValue")
-console.log(getSavedValue("colValue"))
+if(document.getElementById("colValue").value){
+    document.getElementById("colValue").value =  getSavedValue("colValue")
+}
 
-document.getElementById("colName").value = getSavedValue("colName")
-console.log(getSavedValue("colName"))
+if (document.getElementById("colName").value) {
+    document.getElementById("colName").value = getSavedValue("colName")
+}
 
 function saveValue(e){
     var id = e.id;

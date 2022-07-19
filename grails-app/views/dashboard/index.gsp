@@ -8,11 +8,10 @@
 </head>
 <body>
     <sec:ifLoggedIn>
-        Sudah Login ${me.fullname}
+        <sec:loggedInUserInfo field="fullname"/>
     </sec:ifLoggedIn>
     <sec:ifNotLoggedIn>
-        Belum Login
+        <a class="d-block">No User</a>
     </sec:ifNotLoggedIn>
-
 </body>
 </html>

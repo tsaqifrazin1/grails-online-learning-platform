@@ -1,5 +1,6 @@
 package com.intern.olp
 
+import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.plugin.springsecurity.annotation.Secured
 
 
@@ -19,7 +20,8 @@ class RegistrationController {
             redirect(action: "index")
         } else {
             flash.message = AppUtil.infoMessage(g.message(code: "saved", args: ['User']))
-            redirect(controller: "login", action: "auth")
+            SpringSecurityUtils.reauthenticate(params.email, params.password)
+            redirect(controller: "dashboard", action: "index")
         }
     }
 }

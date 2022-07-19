@@ -21,7 +21,6 @@
                         <olp:dropDownColName collection="${reviewList}"/>
                         %{--<g:select name="colName" class="form-control" from="[body: 'Body', user: 'User Email']" value="${params?.colName}" optionKey="key" optionValue="value" onselect="saveValue(this)"/>--}%
                         <input type="text" name="colValue" class="form-control" onkeyup="saveValue(this)" id="colValue">
-                        %{--<g:textField name="colValue" class="form-control" value="${params?.colValue}"/>--}%
                         <span class="input-group-btn">
                             <button class="btn btn-default" id="search-button" type="submit">Search</button>
                         </span>
