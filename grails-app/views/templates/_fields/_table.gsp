@@ -5,7 +5,7 @@
             <g:set var="propTitle">${domainClass.propertyName}.${p.name}.label</g:set>
             <g:sortableColumn property="${p.name}" title="${message(code: propTitle, default: p.naturalName)}" />
         </g:each>
-        <th class="action-row"><g:message code="action"/></th>
+        <th class="action-row col-1"><g:message code="action"/></th>
     </tr>
     </thead>
     <tbody>
