@@ -44,13 +44,16 @@ class ReviewService {
         List<Review> reviewList = Review.createCriteria().list(params){
             createAlias("user", "u")
             if (params?.colName && params?.colValue){
-                like(params.colName, "%" + params.colValue + "%")
+                if(params?.colName == 'id'){
+                    idEquals(Long.valueOf(params?.colValue))
+                }else{
+                    like(params.colName, "%" + params.colValue + "%")
+                }
             }
             if (!params.sort){
                 order("id", "desc")
             }
         }
-
         return [list: reviewList, count: Review.count()]
     }
 
