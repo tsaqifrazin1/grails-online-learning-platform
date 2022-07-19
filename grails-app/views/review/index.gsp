@@ -18,7 +18,9 @@
                             %{--<option value="body">Body</option>--}%
                             %{--<option value="user">User Email</option>--}%
                         %{--</select>--}%
-                        <olp:dropDownColName collection="${reviewList}"/>
+                        <g:if test="${reviewList[0] != null}">
+                            <olp:dropDownColName collection="${reviewList}"/>
+                        </g:if>
                         %{--<g:select name="colName" class="form-control" from="[body: 'Body', user: 'User Email']" value="${params?.colName}" optionKey="key" optionValue="value" onselect="saveValue(this)"/>--}%
                         <input type="text" name="colValue" class="form-control" onkeyup="saveValue(this)" id="colValue">
                         <span class="input-group-btn">
@@ -34,7 +36,9 @@
         </span>
     </div>
     <div class="card-body">
-        <olp:table collection="${reviewList}"/>
+        <g:if test="${reviewList[0] != null}">
+            <olp:table collection="${reviewList}" withId="['id']"/>
+        </g:if>
         <div class="paginate">
             <g:paginate total="${total ?: 0}" maxsteps="3" />
         </div>
