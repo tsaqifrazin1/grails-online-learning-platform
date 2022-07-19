@@ -37,34 +37,44 @@
         </li>
 
         <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="fa-solid fa-user-tie"></i>
-                <span class="badge badge-danger navbar-badge"></span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <sec:ifLoggedIn>
-                    <g:link class="logout dropdown-item" controller="logout">
-                        <div class="media">
-                            <div class="media-body">
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                <p class="font-weight-bold text-red">${message(code: 'Logout')}</p>
+        <sec:ifLoggedIn>
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span class="badge badge-danger navbar-badge"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <sec:ifLoggedIn>
+                        <g:link class="logout dropdown-item" controller="logout">
+                            <div class="media">
+                                <div class="media-body">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                    <p class="font-weight-bold text-red">${message(code: 'Logout')}</p>
+                                </div>
                             </div>
-                        </div>
-                    </g:link>
-                </sec:ifLoggedIn>
-                <sec:ifNotLoggedIn>
-                    <g:link class="login dropdown-item" controller="login">
-                        <div class="media">
-                            <div class="media-body">
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                <p class="font-weight-bold text-blue">${message(code: 'Login')}</p>
+                        </g:link>
+                    </sec:ifLoggedIn>
+                    <sec:ifNotLoggedIn>
+                        <g:link class="login dropdown-item" controller="login">
+                            <div class="media">
+                                <div class="media-body">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                    <p class="font-weight-bold text-blue">${message(code: 'Login')}</p>
+                                </div>
                             </div>
-                        </div>
-                    </g:link>
-                </sec:ifNotLoggedIn>
-            </div>
-        </li>
+                        </g:link>
+                    </sec:ifNotLoggedIn>
+                </div>
+            </li>
+        </sec:ifLoggedIn>
+        <sec:ifNotLoggedIn>
+            <li class="nav-item">
+                <div class="col">
+                    <g:link controller="registration" action="index" class="btn btn-primary btn-block">Register</g:link>
+                </div>
+            </li>
+        </sec:ifNotLoggedIn>
+
         <!-- Notifications Dropdown Menu -->
     </ul>
 </nav>
