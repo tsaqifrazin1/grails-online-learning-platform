@@ -4,5 +4,5 @@
             <g:set var="propTitle">${domainClass.propertyName}.${p.name}.label</g:set>
             <option value="${p.name}"><g:message code="${p.name}.${p.name}" default="${p.naturalName}"/></option>
         </g:each>
-<select>
-
+    </tr>
+</select>
