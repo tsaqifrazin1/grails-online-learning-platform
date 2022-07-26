@@ -1,4 +1,5 @@
 %{--Include Main Layout--}%
+
 <meta name="layout" content="main"/>
 
 <div class="card">
@@ -8,7 +9,16 @@
     <div class="card-body">
         <g:form resource="${this.review}" method="PUT">
             <fieldset class="form">
-                <f:all bean="review"/>
+                <olp:all bean="review" except="user"/>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">User
+                        <span class="required-indicator">*</span>
+                    </label>
+                    <div class="col-sm-10">
+
+                        <g:select class="form-control" name="user.id" from="${userList}" optionValue="email" optionKey="id" value="${review.user.id}"/>
+                    </div>
+                </div>
             </fieldset>
             <div class="form-action-panel">
                 <g:submitButton class="btn btn-primary" name="update" value="${message(code: 'default.button.edit.label', default: 'Update')}"/>

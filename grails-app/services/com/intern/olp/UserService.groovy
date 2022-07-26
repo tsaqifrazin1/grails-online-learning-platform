@@ -1,17 +1,25 @@
 package com.intern.olp
 
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.transaction.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
 
 @Transactional
 class UserService {
+
+    SpringSecurityService springSecurityService
     
     def save(GrailsParameterMap params){
         User user = new User(params)
         def response = AppUtil.saveResponse(false, user)
-        if (user.validate()){
-            user.save(flush:true)
-            if(!user.hasErrors()){
+        user.validate()
+        if (!user.hasErrors()) {
+            user.save(flush: true)
+            def roleUser = Role.findById(params.role)
+            UserRole userRole = UserRole.create(user, roleUser)
+            userRole.validate()
+            if(!userRole.hasErrors()){
+                userRole.save(flush: true)
                 response.isSuccess = true
             }
         }
@@ -58,5 +66,8 @@ class UserService {
             return false
         }
         return true
+    }
+    def all(){
+        return User.findAll()
     }
 }

@@ -28,7 +28,7 @@ class UserController {
 
     def create(){
 //        respond new User(params)
-        [user: new User(params)]
+        [user: new User(params), roleList: Role.findAll()]
     }
 
     @Secured('permitAll')

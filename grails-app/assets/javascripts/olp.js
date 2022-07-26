@@ -1,5 +1,7 @@
 OLP = {};
 
+$("#toast-container").delay(1000).fadeOut(300)
+
 document.getElementById("colValue").value =  getSavedValue("colValue")
 
 document.getElementById("colName").value = getSavedValue("colName")
@@ -24,4 +26,5 @@ form.onchange = function (e) {
     saveValue(optionValue)
 
 }
+
 

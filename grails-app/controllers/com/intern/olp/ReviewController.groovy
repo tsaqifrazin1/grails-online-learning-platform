@@ -9,6 +9,8 @@ class ReviewController {
 
     ReviewService reviewService
     SpringSecurityService springSecurityService
+    UserService userService
+
 
     def index() {
         def response = reviewService.list(params)
@@ -27,7 +29,7 @@ class ReviewController {
 
     def create(){
 //        respond new Review(params)
-        [review: new Review(params)]
+        [review: new Review(params), userList: User.list()]
     }
 
     @Secured('permitAll')
@@ -52,7 +54,7 @@ class ReviewController {
                 flash.message = AppUtil.infoMessage(g.message(code: "invalid.entity", args: ['Review']), false)
                 redirect(controller: "review", action: "index")
             } else {
-                [review: response]
+                [review: response, userList: User.list()]
             }
         }
     }

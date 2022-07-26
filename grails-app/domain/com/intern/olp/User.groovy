@@ -62,8 +62,4 @@ class User implements Serializable {
 		reviews cascade: "all-delete-orphan"
 	}
 
-	@Override
-	String toString() {
-		email
-	}
 }

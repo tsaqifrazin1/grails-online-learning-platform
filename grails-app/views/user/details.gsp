@@ -7,21 +7,45 @@
     </head>
     <body>
         <div id="show-user" class="content scaffold-show mt-2" role="main">
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
             <div class="card">
                 <div class="card-header d-flex p-0">
                     <h3 class="card-title p-3"><g:message code="default.show.label" args="[entityName]" /></h3>
                     <div class="ml-auto col-sm-2 pt-2">
-                        <g:link class="ml-auto btn btn-primary btn-block" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link>                </div>
+                        <g:link class="ml-auto btn btn-primary btn-block" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link>
                     </div>
-                <f:display bean="user" displayStyle="table" />
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8">${user.email}</dd>
+
+                        <dt class="col-sm-4">Fullname</dt>
+                        <dd class="col-sm-8">${user.fullname}</dd>
+
+                        <dt class="col-sm-4">Experience</dt>
+                        <dd class="col-sm-8">${user.experience}</dd>
+
+                        <dt class="col-sm-4">City</dt>
+                        <dd class="col-sm-8">${user.city}</dd>
+
+                        <dt class="col-sm-4">Enabled</dt>
+                        <dd class="col-sm-8">${user.enabled}</dd>
+
+                        <dt class="col-sm-4">Courses</dt>
+                        <dd class="col-sm-8">${user.courses}</dd>
+
+                        <dt class="col-sm-4">Reviews</dt>
+                        <dd class="col-sm-8">${user.reviews.body}</dd>
+
+                        %{--<dt class="col-sm-4">User</dt>--}%
+                        %{--<dd class="col-sm-8"><a href="/user/show/${review.user.id}">${review.user.email}</a></dd>--}%
+                    </dl>
+                </div>
                 <div class="card-footer d-flex ml-auto pt-0">
                     <g:form resource="${this.user}" method="DELETE">
                         <div class="ml-auto">
-                            <g:link class="edit" action="edit" resource="${this.user}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-                            <input class="delete bg-gradient-red" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                            <g:link action="edit" controller="user" id="${user.id}" class="btn btn-secondary" ><i class="fas fa-edit"></i></g:link>
+                            <g:link action="delete" controller="user" id="${user.id}" class="btn btn-secondary delete-confirmation"><i class="fas fa-trash"></i></g:link>
                         </div>
                     </g:form>
                 </div>

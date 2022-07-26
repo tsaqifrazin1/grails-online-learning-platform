@@ -6,33 +6,33 @@
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#edit-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-            </ul>
+        <div class="card-header">
+            <g:message code="user" args="['Edit']"/>
         </div>
-        <div id="edit-user" class="content scaffold-edit" role="main">
-            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <g:hasErrors bean="${this.user}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.user}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-            </g:hasErrors>
-            <g:form resource="${this.user}" method="PUT">
-                <g:hiddenField name="version" value="${this.user?.version}" />
-                <fieldset class="form">
-                    <g:render template="form" model="[user: user]"/>
-                </fieldset>
-                <fieldset class="buttons">
-                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                </fieldset>
-            </g:form>
-        </div>
+        <div class="card-body">
+                <g:form method="POST" controller="user" action="update" id="${user.id}">
+                    <div class="form-group row false">
+                        <label for="email" class="col-sm-2 col-form-label">Email
+                            <span class="required-indicator">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="email" name="email" required="" value="${user.email}" id="email" class="form-control" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group row false">
+                        <label for="fullname" class="col-sm-2 col-form-label">Fullname
+                            <span class="required-indicator">*</span>
+                        </label>
+
+                        <div class="col-sm-10">
+                            <input type="fullname" name="fullname" required="" value="${user.fullname}" id="fullname" class="form-control" placeholder="Fullname">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <button type="submit" class="btn btn-info float-right">Edit</button>
+                        <g:link action="index" controller="user" class="btn btn-default float-right">Cancel</g:link>
+                    </div>
+                </g:form>
+            </div>
     </body>
 </html>

@@ -22,6 +22,9 @@ class OlpTagLib {
         Object bean
         String prefix
     }
+
+    private static final String BEAN_ATTR = "bean"
+
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 
     def table = { attrs, body ->
@@ -53,7 +56,10 @@ class OlpTagLib {
     }
 
     def dropDownColName =  { attrs, body ->
-        def collection = resolveBean(attrs.remove('collection'))
+        def collection
+        if(attrs.containsKey("collection")){
+            collection = resolveBean(attrs.remove('collection'))
+        }
         def blacklist = attrs.except?.tokenize(',')*.trim() ?: []
         def domainClass
         if (attrs.containsKey('domainClass')) {
@@ -84,19 +90,26 @@ class OlpTagLib {
 
     def all = { attrs ->
         if (!attrs.bean) throwTagError("Tag [all] is missing required attribute [bean]")
+        BeanAndPrefix beanPrefix = resolveBeanAndPrefix(attrs.bean, attrs.prefix, attrs)
+        def blacklist = attrs.except?.tokenize(',')*.trim() ?: []
         def bean = resolveBean(attrs.bean)
-        println(attrs.prefix)
-        if (attrs.prefix != null) {
-            def prefix = resolvePrefix(attrs.prefix)
-        }
         def domainClass = resolveDomainClass(bean)
+        def properties
         if (domainClass) {
-            for (property in resolvePersistentProperties(domainClass, attrs)) {
-                out << field(bean: bean, property: property.name, prefix: prefix)
-            }
+            properties = resolvePersistentProperties(domainClass, attrs)
+            properties.removeAll { it.name in blacklist }
+
+            out << render(template: "/templates/_fields/edit",
+                    model: [bean: bean, domainProperties: properties, domainClass: domainClass])
         } else {
             throwTagError('Tag [all] currently only supports domain types')
         }
+//
+    }
+
+    def editcreate = { attrs ->
+        if (!attrs.bean) throwTagError("Tag [all] is missing required attribute [bean]")
+        def bean = resolveBean(attrs.bean)
     }
 
     private Object resolveBean(beanAttribute) {
@@ -147,6 +160,17 @@ class OlpTagLib {
             Collections.sort(properties, new org.grails.validation.DomainClassPropertyComparator(domainClass))
         }
         properties
+    }
+
+    private BeanAndPrefix resolveBeanAndPrefix(beanAttribute, prefixAttribute, attributes) {
+        def bean = resolvePageScopeVariable(beanAttribute) ?: beanAttribute
+        def prefix = resolvePageScopeVariable(prefixAttribute) ?: prefixAttribute
+        def innerAttributes = attributes.clone()
+        innerAttributes.remove('bean')
+        innerAttributes.remove('prefix')
+        //'except' is a reserved word for the 'all' tag: https://github.com/grails-fields-plugin/grails-fields/issues/12
+        innerAttributes.remove('except')
+        new BeanAndPrefix(bean: bean, prefix: prefix)
     }
 
     def paginate = { Map attrsMap ->
@@ -250,7 +274,7 @@ class OlpTagLib {
             // display paginate steps
             (beginstep..endstep).each { int i ->
                 if (currentstep == i) {
-                    writer << "<span class=\"currentStep\">${i}</span>"
+                    writer << "<li class=\"paginate_button page-item\"><span class=\"currentStep page-link\">${i}</span></li>"
                 }
                 else {
                     linkParams.offset = (i - 1) * max
@@ -260,7 +284,7 @@ class OlpTagLib {
 
             //show a gap if beginstep isn't immediately before firststep, and if were not omitting first or rev
             if (endstep+1 < laststep && (!attrs.boolean('omitLast') || !attrs.boolean('omitNext'))) {
-                writer << '<span class="step gap">..</span>'
+                writer << "<li class=\"paginate_button page-item\"><span class=\"step gap page-link\">..</span>"
             }
             // display laststep link when endstep is not laststep
             if (endstep < laststep && !attrs.boolean('omitLast')) {

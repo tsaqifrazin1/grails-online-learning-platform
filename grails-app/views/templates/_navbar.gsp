@@ -143,6 +143,12 @@
                                 <p><g:message code = "User" args="['']"/></p>
                             </g:link>
                         </li>
+                        <li>
+                            <g:link controller="revtest" action="index" class="nav-link">
+                                <i class="nav-icon fa-solid fa-table-list"></i>
+                                <p><g:message code = "nReview" args="['']"/></p>
+                            </g:link>
+                        </li>
                     </ul>
                 </li>
             </ul>

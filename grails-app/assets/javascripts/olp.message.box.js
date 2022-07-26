@@ -1,4 +1,4 @@
-OLP.messageBox =  (function () {
+messageBox =  (function () {
     var messageHtml = '<div class="alert"><span class="message"></span></div>',
         timeOut = null;
 

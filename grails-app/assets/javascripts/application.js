@@ -7,8 +7,8 @@
 //
 //= require jquery-3.3.1.min
 //= require bootstrap.bundle
-//= require popper.min
 //= require jquery-confirm.min
+//= require toastr.js
 //= require olp
 //= require adminlte
 //= require olp.init

@@ -34,19 +34,22 @@
     </aside>
     <!-- /.control-sidebar -->
 
+    %{--Alert--}%
+    <g:render template="/templates/alert"/>
     <!-- Main Footer -->
     <g:render template="/templates/footer"/>
 
 </div>
 <!-- ./wrapper -->'
 <asset:javascript src="application.js"/>
-<script type="text/javascript">
-    <g:if test="${flash?.message && flash?.message?.info}">
-    jQuery(document).ready(function () {
-        OLP.messageBox.showMessage(Boolean(${flash.message?.success}), "${flash.message?.info}");
-    });
-    </g:if>
-</script>
+%{--<script type="text/javascript">--}%
+    %{--<g:if test="${flash?.message && flash?.message?.info}">--}%
+
+    %{--jQuery(document).ready(function () {--}%
+        %{--messageBox.showMessage(Boolean(${flash.message?.success}), "${flash.message?.info}");--}%
+    %{--});--}%
+    %{--</g:if>--}%
+%{--</script>--}%
 <script src="https://kit.fontawesome.com/c8c9906cce.js" crossorigin="anonymous"></script>
 
 
