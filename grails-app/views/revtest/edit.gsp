@@ -21,7 +21,12 @@
                 <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-2 col-form-label">User</label>
                     <div class="col-sm-10">
-                        <g:select id="inputPassword3" class="form-control" name="user" from="${userList}" optionValue="email" optionKey="id" value="${review.user.id}"/>
+                        <select id="inputPassword3" class="form-control" name="user">
+                            <option value="">Pilih email</option>
+                            <g:each var="user" in="${userList}">
+                                <option value="${user.id}">${user.email}</option>
+                            </g:each>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">

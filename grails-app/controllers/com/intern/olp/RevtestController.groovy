@@ -78,16 +78,10 @@ class RevtestController {
         review.validate()
         if(!review.hasErrors()){
             review.save()
-            flash.message = AppUtil.infoMessage(g.message(code: "saved", args: ['Review']))
+            flash.message = AppUtil.infoMessage(g.message(code: "saved", args: ['Review']) as String)
             redirect(controller: "revtest", action: "index")
         }else{
-            String message = ""
-            review.errors.fieldErrors.each {
-                def error -> message += "${g.message(error: error)}<br>"
-            }
-            flash.message = AppUtil.infoMessage(message, false)
-            respond review.errors, view: "create"
-//            redirect(controller: "revtest", action: "create")
+            respond review.errors, view: "create", model: [review: review]
         }
 
     }

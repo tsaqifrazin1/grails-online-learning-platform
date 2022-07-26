@@ -25,6 +25,9 @@
                     </label>
                     <div class="col-sm-10">
                         <input type="email" name="email" required="" value="" id="email" class="form-control" placeholder="Email">
+                        <g:if test="${user?.email != params?.email}">
+                            <span style="color: red">tes</span>
+                        </g:if>
                     </div>
                 </div>
                 <div class="form-group row false">

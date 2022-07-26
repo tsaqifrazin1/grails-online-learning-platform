@@ -10,17 +10,27 @@
     </div>
     <div class="card-body">
 
+
         <g:form method="POST" controller="revtest" action="save">
             <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Body</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputEmail3" name="body">
+                    <input type="text" class="form-control" id="inputEmail3" name="body" value="${}">
+                    <span style="color: red">${hasErrors(bean:review,field:'body','body is required')}</span>
                 </div>
             </div>
+
             <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">User</label>
                 <div class="col-sm-10">
-                    <g:select id="inputPassword3" class="form-control" name="user" from="${userList}" optionValue="email" optionKey="id"/>
+                    %{--<g:select id="inputPassword3" class="form-control" name="user" from="${userList}" optionValue="email" optionKey="id"/>--}%
+                    <select id="inputPassword3" class="form-control" name="user">
+                        <option value="">Pilih email</option>
+                        <g:each var="user" in="${userList}">
+                            <option value="${user.id}">${user.email}</option>
+                        </g:each>
+                    </select>
+                    <span style="color: red">${hasErrors(bean:review,field:'user','user is required')}</span>
                 </div>
             </div>
             <div class="form-group row">
