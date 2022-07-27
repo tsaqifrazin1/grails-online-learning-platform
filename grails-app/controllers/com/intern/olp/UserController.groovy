@@ -35,26 +35,20 @@ class UserController {
     def save(){
         def response = userService.save(params)
         if(!response.isSuccess){
-            flash.redirectParams = response.model
-            flash.message = AppUtil.infoMessage(g.message(code: "unable.to.save", args: ['User']), false)
-            redirect(controller: "user", action: "create")
+            respond response.model.errors, view: "create", model: [user: response.model, roleList: Role.findAll(), role: params.role]
         } else {
             flash.message = AppUtil.infoMessage(g.message(code: "saved", args: ['User']))
             redirect(controller: "user", action: "index")
         }
     }
 
-    def edit(Integer id){
-        if(flash.redirectParams) {
-            [user: flash.redirectParams]
+    def edit(){
+        def response = userService.getById(params.id)
+        if (!response){
+            flash.message = AppUtil.infoMessage(g.message(code: "invalid.entity", args: ['User']), false)
+            redirect(controller: "user", action: "index")
         } else {
-            def response = userService.getById(id)
-            if (!response){
-                flash.message = AppUtil.infoMessage(g.message(code: "invalid.entity", args: ['User']), false)
-                redirect(controller: "user", action: "index")
-            } else {
-                [user: response]
-            }
+            [user: response]
         }
     }
 
@@ -66,11 +60,8 @@ class UserController {
         } else {
             response = userService.update(response, params)
             if(!response.isSuccess){
-                flash.redirectParams = response.model
-                flash.message = AppUtil.infoMessage(g.message(code: "unable.to.update", args: ['User']), false)
-                redirect(controller: "user", action: "edit")
+                respond response.model.errors, view: 'edit', model: [user: response.model]
             } else {
-                flash.message = AppUtil.infoMessage(g.message(code: "updated", args: ['User']))
                 redirect(controller: "user", action: "index")
             }
         }
