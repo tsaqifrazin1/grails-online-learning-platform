@@ -50,7 +50,7 @@ class RevtestController {
             review.errors.fieldErrors.each {
                 def error -> flash.message = AppUtil.infoMessage(g.message(error: error), false)
             }
-            respond review.errors, view: 'edit', model: [userList: userService.all()]
+            respond review.errors, view: 'edit', model: [userList: userService.all(), review:   params]
         }
 
     }
@@ -81,7 +81,8 @@ class RevtestController {
             flash.message = AppUtil.infoMessage(g.message(code: "saved", args: ['Review']) as String)
             redirect(controller: "revtest", action: "index")
         }else{
-            respond review.errors, view: "create", model: [review: review]
+            def userList = userService.all()
+            respond review.errors, view: "create", model: [review: review, userList: userList]
         }
 
     }
